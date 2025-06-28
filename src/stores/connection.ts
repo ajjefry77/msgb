@@ -1,3 +1,4 @@
+import type { Connection } from '@/util/types';
 import {
   StringCodec,
   connect as wsConnect,
@@ -8,7 +9,14 @@ import {
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
+
 export const useConnectionStore = defineStore('connection', () => {
+  const types = {
+    Nats: "Nats"
+  };
+  
+  const connections = ref<Connection[]>([]);
+
   const wsConnection = ref<NatsConnection>()
   const sc = StringCodec()
 
@@ -37,7 +45,9 @@ export const useConnectionStore = defineStore('connection', () => {
   }
 
   return {
+    connections,
     wsConnection,
+    types,
     connect,
     subscribe,
     publish
